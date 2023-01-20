@@ -5,7 +5,6 @@ import { Menu } from '../icons';
 import './header.css';
 import Button from '../button/button';
 
-
 export default function Header () {
 
     const [mobileMenuVisible, mobileMenuVisibleSet] = useState(false)
