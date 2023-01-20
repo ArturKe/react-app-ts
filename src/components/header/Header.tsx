@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 import reactLogo from '../../assets/react.svg'
 import { Menu } from '../icons';
 import './header.css';
-import Button from '../button/button';
+// import Button from '../button/button';
+import Button from '@/components/button/button';
 
 export default function Header () {
 

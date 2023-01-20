@@ -1,5 +1,4 @@
 import React, { ReactNode, useState } from 'react';
-import { useEffect } from 'react';
 import './Button.css';
 
 interface Button {
