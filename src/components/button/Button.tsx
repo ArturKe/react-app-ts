@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useEffect } from 'react';
 import './Button.css';
 
-export default function Button (props: any) {
+interface Button {
+    event?: ()=>void,
+    icon?: JSX.Element
+    children?: ReactNode
+    name?: string
+}
+
+export default function Button (props: Button) {
     const {event=()=>{}} = props
 
     return (    

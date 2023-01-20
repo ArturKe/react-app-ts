@@ -1,7 +1,15 @@
 import React from 'react';
 import './PageLayout.css';
 
-export default function PageLayout (props) {
+interface Layout {
+    header: JSX.Element,
+    blockLeft?: JSX.Element,
+    blocCenter?: JSX.Element,
+    blocRight?: JSX.Element,
+    footer?: JSX.Element
+}
+
+export default function PageLayout (props: Layout) {
     return (
         <div className='page'>
             <div className='page-header'>{props.header}</div>

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Outlet } from "react-router-dom";
 import reactLogo from '../../assets/react.svg'
-// import Button from '../button/Button';
 import { Menu } from '../icons';
 import './header.css';
 import Button from '../button/button';
@@ -43,10 +42,10 @@ export default function Header () {
                     <Button>Join us</Button>
                 </div>
                 <Link to="/">
-                    <Button event={mobileMenuVisible ? toggleVisibility : null}>CRUD</Button>
+                    <Button event={toggleVisibility}>CRUD</Button>
                 </Link>
                 <Link to="/info">
-                    <Button event={mobileMenuVisible ? toggleVisibility : null}>Information</Button>
+                    <Button event={toggleVisibility}>Information</Button>
                 </Link>
             </div>
         </div>
