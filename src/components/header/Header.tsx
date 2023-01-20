@@ -4,7 +4,7 @@ import reactLogo from '../../assets/react.svg'
 import { Menu } from '../icons';
 import './header.css';
 // import Button from '../button/button';
-import Button from '../button/Button';
+import Button from '@/components/button/Button';
 
 export default function Header () {
 
