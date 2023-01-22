@@ -1,8 +1,12 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import './ModalLayout.css';
 
-export default function ModalLayout (props) {
-    // const closeEvent = props.closeEvent === undefined ? () => {} : props.closeEvent 
+interface ModalLayoutProps {
+    closeEvent: ()=>void,
+    children: ReactNode
+}
+
+export default function ModalLayout (props: ModalLayoutProps) {
     const {closeEvent=()=>{}, children} = props
     return (
         <div className='modal-layout' onClick={closeEvent}>

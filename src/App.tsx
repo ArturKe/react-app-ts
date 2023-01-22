@@ -4,6 +4,7 @@ import List from './components/list/list'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import PageLayout from './components/layouts/Page/PageLayout'
 import Header from './components/header/Header'
+import ListComponent from './components/lists/list/ListComponent'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -14,8 +15,8 @@ function App() {
             <Route path="/" element={
                 <PageLayout
                     header={<Header></Header>}
-                    // blocCenter={<ListComponent/>}
-                    blocCenter={<List/>}
+                    blocCenter={<ListComponent/>}
+                    // blocCenter={<List/>}
                 />}
             />
             <Route path="/info" element={

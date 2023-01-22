@@ -1,0 +1,26 @@
+.customCheckbox {
+    width: 25px;
+    height: 25px;
+    border: 2px solid;
+    box-sizing: border-box;
+    border-color: rgb(125, 125, 125);
+    border-radius: 8px;
+    background-color: rgb(219, 219, 219);
+    margin: 5px;
+    cursor: pointer;
+    transition: border 0.2s
+}
+
+/* .customCheckbox:hover {
+    background-color: rgb(203, 203, 203);
+} */
+
+.active {
+    background-color: rgb(70, 70, 70);
+    border: 6px solid;
+    border-color: rgb(180, 180, 180);
+    transition: border 0.3s, background-color 0.2s;
+}
+/* .active:hover {
+    background-color: rgb(125, 125, 125);
+} */

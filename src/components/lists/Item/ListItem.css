@@ -1,0 +1,27 @@
+.list-item {
+    min-height: 50px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-radius: 24px;
+    background-color: rgb(255, 247, 236);
+    padding: 8px 12px;
+    color: grey;
+}
+.list-item-title {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    overflow: hidden;
+}
+.list-item-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+@media screen and (max-width: 700px) {
+    .list-item-buttons .text-button {
+        display: none;
+    }
+}
