@@ -9,8 +9,8 @@ declare global {
         id: number,
         title: string,
         description: string,
-        selected: boolean,
-        created: string
+        selected?: boolean,
+        created?: string
     }
 
     enum typeModal {
@@ -24,12 +24,16 @@ declare global {
         titleForm?: string,
         description?: globalRecord['description'],
         fields?: object[],
-        actionName?: string,
-        actions?: {
-            delete: (id)=>void,
-            deleteAll: ()=>void,
-            create: (id, title, desc)=>void,
-            edit: (id, title, desc)=>void
-        }
+        record?: globalRecord,
+        actionName: keyof globalActions,
+        actions?: globalActions
+    }
+
+    interface globalActions {
+        delete: (id)=>void,
+        deleteAll: ()=>void,
+        create: (record)=>void,
+        edit: (record)=>void
+        default: ()=>void
     }
 }

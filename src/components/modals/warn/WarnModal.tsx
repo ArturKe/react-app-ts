@@ -1,12 +1,14 @@
 import ModalWrapper from '../modal-wrapper/ModalWrapper';
 import Button from '../../button/Button';
 // import { ReactNode } from 'react';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, ReactNode } from 'react';
+import './WarnModal.css'
 
 interface WarnModalProps {
     eventClose: ()=> void,
-    acceptHandler: ()=> void,
+    // acceptHandler: ()=> void,
     config: modalConfig
+    children: ReactNode
 }
 
 export default function WarnModal (props: WarnModalProps) {
@@ -16,14 +18,18 @@ export default function WarnModal (props: WarnModalProps) {
             }
 
     const acceptHandler = () => {
-        // props.acceptHandler()
         console.log("Accept")
-        if (props.config.actions) console.log(props.config.actions[props.config.actionName](0, title, desc))
+        const record = {
+            id: props.config.record?.id,
+            title,
+            description: desc
+        }
+        if (props.config.actions) console.log(props.config.actions[props.config.actionName](record))
         props.eventClose()
     }
 
-    const [title, setTitle] = useState(props.config.title)
-    const [desc, setDesc] = useState(props.config.description)
+    const [title, setTitle] = useState(props.config.record?.title)
+    const [desc, setDesc] = useState(props.config.record?.description)
 
     const textInput = useRef<HTMLInputElement>(null)
     useEffect(() => {
@@ -40,7 +46,7 @@ export default function WarnModal (props: WarnModalProps) {
                 footer={<Button event={acceptHandler}>Ok</Button>}
             ></ModalWrapper>
         )  
-    } else if (props.config.type === 'form') {
+    } else {
         return (<ModalWrapper
             eventClose={closeHandler}
             header={props.config.titleForm }
@@ -63,6 +69,6 @@ export default function WarnModal (props: WarnModalProps) {
             footer={<Button event={acceptHandler}>Ok</Button>}
         ></ModalWrapper>)
     }
-
+    // if (props.config.type === 'form')
     
 }
