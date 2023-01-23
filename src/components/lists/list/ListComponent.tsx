@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '@/components/button/Button.jsx';
 import Checkbox from '@/components/checkbox/Checkbox.jsx';
-import EditForm from '@/components/forms/edit/EditForm.jsx';
 import WarnModal from '@/components/modals/warn/WarnModal.jsx';
 import ListItem from '@/components/lists/Item/ListItem.jsx';
 import '@/components/lists/list/listComponent.css';
