@@ -24,29 +24,16 @@ export default function ListComponent () {
         {id: 3, title: 'Article about Bears', description: 'Hello world!!!', selected: false, created: ''},
         {id: 4, title: 'Article about Dinosaurs', description: 'Hello world!!!', selected: false, created: ''},
     ])
-
-    // Actions
-    const deleteAction = (id: number) => {
-        let newItem = items.filter((record) => record.id !== id )
-        setItems(newItem)
-    }
-    const deleteAllAction = () => {
-        let newItem = items.filter((record) => !record.selected)
-        setItems(newItem)
-    }
     
 
     // CRUD Events ---/
-
     const createRecordEvent = () => {
         setModalConfig({
             type: 'form',
             titleForm: 'Создание записи',
             description: '',
             actionName: 'create',
-            actions: {create: (record) => createRecordAccept(record), delete: ()=>{}, default: ()=>{}, deleteAll: () =>{}, edit: ()=>{}}
-            // actions: {delete: deleteAction(id)}
-            
+            actions: {create: (record) => createRecordAction(record), delete: ()=>{}, default: ()=>{}, deleteAll: () =>{}, edit: ()=>{}}            
         })
         toggleVisWarnModal()
     }
@@ -64,7 +51,7 @@ export default function ListComponent () {
             description,
             record,
             actionName: 'edit',
-            actions: {edit: (record) => editRecordAccept(record), delete: ()=>{},create: ()=>{}, default: ()=>{}, deleteAll: () =>{}}
+            actions: {edit: (record) => editRecordAction(record), delete: ()=>{},create: ()=>{}, default: ()=>{}, deleteAll: () =>{}}
         })
         toggleVisWarnModal()
     }
@@ -99,7 +86,6 @@ export default function ListComponent () {
     }
 
     // SELECT Events ---/
-
     const selectRecordEvent = (id: number, state: boolean = true) =>{
         let newItem = items.map((record) => {
             return record.id === id ? { ...record, selected: state} : record
@@ -114,22 +100,24 @@ export default function ListComponent () {
 
 
     // Actions ---/
-
-    const createRecordAccept = (record: globalRecord) => {
-        // toggleVisEditForm()
-        console.log(record.title + record.description)
+    const deleteAction = (id: number) => {
+        let newItem = items.filter((record) => record.id !== id )
+        setItems(newItem)
+    }
+    const deleteAllAction = () => {
+        let newItem = items.filter((record) => !record.selected)
+        setItems(newItem)
+    }
+    const createRecordAction = (record: globalRecord) => {
+        // console.log(record.title + record.description)
         if (record.title.length > 0 || record.description.length > 0) {
             let newItem = [...items] 
-            
-            // newItem.push({id: +new Date, title: (new Date).toString(), description: 'Hello world!!!', selected: false},)
             newItem.push({id: +new Date, title: record.title, description: record.description, selected: false, created: (new Date).toString()},)
             setItems(newItem)
         }
     }
-
-    const editRecordAccept = (record: globalRecord) => {
+    const editRecordAction = (record: globalRecord) => {
         console.log('Accept record with: ' + record.id + record.title + record.description)
-
         let newItems = [...items]
 
         let editItem = newItems.find((item) => item.id === record.id)
@@ -158,7 +146,6 @@ export default function ListComponent () {
 
     // Modals
     const [warnModalVisible, setWarnModalVisible] = useState(false)
-    const [EditFormVisible, setEditFormVisible] = useState(false)
     const [amountSelectedRecords, setAmountSelectedRecords] = useState(0)
     const [amountRecords, setAmountRecords] = useState(0)
 
@@ -167,13 +154,12 @@ export default function ListComponent () {
         actionName: 'default',
         actions: {
             delete: deleteAction,
-            create: createRecordAccept,
+            create: createRecordAction,
             deleteAll: deleteAllAction,
-            edit: editRecordAccept,
+            edit: editRecordAction,
             default: ()=>{}
         }
     })
-
 
     const modalWarn = () => {
         return warnModalVisible ?
@@ -181,11 +167,10 @@ export default function ListComponent () {
                 config = {ModalConfig}
                 eventClose={toggleVisWarnModal}
                 >
-            </WarnModal> : <></>
+            </WarnModal> : null
     }
 
     const toggleVisWarnModal = () => {setWarnModalVisible(!warnModalVisible)}
-    const toggleVisEditForm = () => {setEditFormVisible(!EditFormVisible)}
 
     return (
         <div className='list'>
