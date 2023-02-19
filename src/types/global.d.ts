@@ -23,10 +23,16 @@ declare global {
         title?: globalRecord['title'],
         titleForm?: string,
         description?: globalRecord['description'],
-        fields?: object[],
+        fields?: field[],
         record?: globalRecord,
         actionName: keyof globalActions,
         actions?: globalActions
+    }
+
+    interface field {
+        name: string,
+        label: string,
+        value: string | number
     }
 
     interface globalActions {

@@ -29,10 +29,20 @@ export default function ListComponent () {
     const createRecordEvent = () => {
         setModalConfig({
             type: 'form',
-            titleForm: 'Создание записи',
+            titleForm: 'Create record',
             description: '',
             actionName: 'create',
-            actions: {create: (record) => createRecordAction(record), delete: ()=>{}, default: ()=>{}, deleteAll: () =>{}, edit: ()=>{}}            
+            actions: {
+                create: (record) => createRecordAction(record), 
+                delete: ()=>{}, 
+                default: ()=>{}, 
+                deleteAll: () =>{}, 
+                edit: ()=>{}
+            },
+            fields: [
+                {name: 'title', label: 'Title', value: ''},
+                {name: 'description', label: 'Description', value: ''}
+            ]    
         })
         toggleVisWarnModal()
     }
@@ -45,12 +55,16 @@ export default function ListComponent () {
         }
         setModalConfig({
             type: 'form',
-            titleForm: 'Редактирование записи',
+            titleForm: 'Edit record',
             title,
             description,
             record,
             actionName: 'edit',
-            actions: {edit: (record) => editRecordAction(record), delete: ()=>{},create: ()=>{}, default: ()=>{}, deleteAll: () =>{}}
+            actions: {edit: (record) => editRecordAction(record), delete: ()=>{},create: ()=>{}, default: ()=>{}, deleteAll: () =>{}},
+            fields: [
+                {name: 'title', label: 'Title', value: title},
+                {name: 'description', label: 'Description', value: description}
+            ]
         })
         toggleVisWarnModal()
     }
@@ -66,8 +80,6 @@ export default function ListComponent () {
                 actions: {deleteAll: () => deleteAllAction(), delete: () =>{}, create: ()=>{}, edit: ()=>{}, default: ()=>{}}
             })
             toggleVisWarnModal()
-
-            // setWarnModalTitle(amountSelectedRecords > 1 ? `Delete ${amountSelectedRecords} records?` : `Delete this record?` )
         }
     }
 
@@ -95,6 +107,7 @@ export default function ListComponent () {
         // setCheckBoxState(state)
         let newItem = items.map((item) => ({ ...item, selected: state}))
         setItems(newItem)
+        setCheckBoxState(true)
     }
 
 
@@ -106,6 +119,7 @@ export default function ListComponent () {
     const deleteAllAction = () => {
         let newItem = items.filter((record) => !record.selected)
         setItems(newItem)
+        setCheckBoxState(false)
     }
     const createRecordAction = (record: globalRecord) => {
         // console.log(record.title + record.description)

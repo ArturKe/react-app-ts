@@ -1,7 +1,7 @@
+import { useState, useEffect, useRef, ReactNode } from 'react';
 import ModalWrapper from '../modal-wrapper/ModalWrapper';
 import Button from '../../button/Button';
-// import { ReactNode } from 'react';
-import { useState, useEffect, useRef, ReactNode } from 'react';
+import CustomInput from '@/components/input/CustomInput';
 import './WarnModal.css'
 
 interface WarnModalProps {
@@ -12,29 +12,49 @@ interface WarnModalProps {
 }
 
 export default function WarnModal (props: WarnModalProps) {
-    const closeHandler = () => {
-                props.eventClose()
-                console.log('Close')
-            }
+    const [text, setText] = useState({})
 
-    const acceptHandler = () => {
-        console.log("Accept")
-        const record = {
-            id: props.config.record?.id,
-            title,
-            description: desc
-        }
-        if (props.config.actions) console.log(props.config.actions[props.config.actionName](record))
+    const closeHandler = () => {
         props.eventClose()
     }
 
-    const [title, setTitle] = useState(props.config.record?.title)
-    const [desc, setDesc] = useState(props.config.record?.description)
+    const acceptHandler = () => {
+        const record = {
+            ...text,
+            id: props.config.record?.id
+        }
+        if (props.config.actions) props.config.actions[props.config.actionName](record)
+        // console.log(props.config.title)
+        props.eventClose()
+    }
+
+    // Object strings
+    const textChanger = (title:string, val: string | number) => {
+        const prepObject = {
+            ...text,
+            [title]: val
+        }
+        setText(prepObject)
+        console.log(text)
+    }
 
     const textInput = useRef<HTMLInputElement>(null)
+    const textInputs = useRef<HTMLInputElement>(null)
     useEffect(() => {
         if (textInput.current) textInput.current.focus()
+        return () => {
+            initFunc()
+        }
     }, [])
+
+    // Init default fields values
+    const initFunc = () => {
+        let initObj = {}
+        if (props.config.fields) (props.config.fields || []).map(field => {
+            initObj = {...initObj, [field.name]: field.value}
+            setText(initObj)
+        })
+    }
 
 
     if (props.config.type === 'warn') {
@@ -53,16 +73,19 @@ export default function WarnModal (props: WarnModalProps) {
             content={
                 <div className='edit-form'>
                     <div className='edit-form_labels'>
-                        <div className='edit-form_item'>Title:</div>
-                        <div className='edit-form_item'>Description:</div>
+                        {(props.config.fields || []).map(field => {
+                                return (
+                                    <div className='edit-form_item' key={field.name}>{field.label}:</div>
+                                )
+                            })
+                        }
                     </div>
                     <div className='edit-form_inputs'>
-                        <div className='edit-form_item'>
-                            <input type="text" ref={textInput} defaultValue={title} onChange={(e) => setTitle(e.target.value)} />
-                        </div>
-                        <div className='edit-form_item'>
-                            <input type="text" defaultValue={desc} onChange={(e) => setDesc(e.target.value)}/>
-                        </div>
+                        {(props.config.fields || []).map((field, idx) => {
+                            return (
+                                <CustomInput reference={idx === 0 ? textInput : textInputs} key={field.name} name={field.name} value={field.value} onChange={(name, val)=> textChanger(name, val)}/>
+                            )
+                        })}
                     </div>
                 </div>
             }

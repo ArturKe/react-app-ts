@@ -1,0 +1,17 @@
+input {
+    padding: 8px;
+    border: 1px solid #cacaca;
+    border-radius: 10px;
+    transition: all 0.3s;
+    height: 100%;
+    box-sizing: border-box;
+    font-size: 16px !important;
+}
+
+input:focus-visible {
+    outline: none !important;
+    border-bottom: 3px solid rgb(130, 130, 130);
+    padding-left: 15px;
+    transition: all 0.3s;
+    font-size: 16px !important;
+}
