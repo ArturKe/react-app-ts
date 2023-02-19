@@ -42,9 +42,10 @@ export default function WarnModal (props: WarnModalProps) {
     const textInputs = useRef<HTMLInputElement>(null)
     useEffect(() => {
         if (textInput.current) textInput.current.focus()
-        return () => {
-            initFunc()
-        }
+        initFunc()
+        // return () => {
+        //     initFunc()
+        // }
     }, [])
 
     // Init default fields values
