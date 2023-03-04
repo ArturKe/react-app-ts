@@ -51,12 +51,11 @@ export default function ListComponent () {
         }
         setModalConfig({
             type: 'form',
-            titleForm: 'Edit record',
-            title,
+            title: 'Edit record',
             description,
             record,
             actions: [
-                {name:'Apply edit', action: () => editRecordAction(record)}
+                {name:'Apply edit', action: (record) => editRecordAction(record)}
             ],
             fields: [
                 {name: 'title', label: 'Title', value: title},
@@ -150,6 +149,8 @@ export default function ListComponent () {
         const amountRecords = (items.filter((record) => record.selected ) || []).length
         setAmountSelectedRecords(amountRecords)
         setAmountRecords(items.length)
+        console.log('First Time')
+        console.log(import.meta.env)
     }
 
     useEffect(() => {

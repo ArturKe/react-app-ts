@@ -23,7 +23,7 @@ export default function WarnModal (props: WarnModalProps) {
             ...text,
             id: props.config.record?.id
         }
-        debugger
+        // debugger
         if (foo) foo(record)
         // if (props.config.actions) props.config.actions[props.config.actionName](record)
         // console.log(props.config.title)
@@ -62,9 +62,9 @@ export default function WarnModal (props: WarnModalProps) {
     // Actions to buttons
     const buttons = () => {
         return (
-            (props.config.actions || []).map(action => {
+            (props.config.actions || []).map((action, idx) => {
                 return (
-                    <Button event={() => acceptHandler(action.action)}>{action.name}</Button>
+                    <Button key={idx} event={() => acceptHandler(action.action)}>{action.name}</Button>
                 )
            })
         )
