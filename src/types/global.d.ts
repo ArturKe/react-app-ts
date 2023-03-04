@@ -6,9 +6,9 @@ declare global {
    * or augment existing declarations in the global namespace.
    */
     interface globalRecord {
-        id: number,
-        title: string,
-        description: string,
+        id?: number,
+        title?: string,
+        description?: string,
         selected?: boolean,
         created?: string
     }
@@ -25,8 +25,13 @@ declare global {
         description?: globalRecord['description'],
         fields?: field[],
         record?: globalRecord,
-        actionName: keyof globalActions,
-        actions?: globalActions
+        // actions?: globalActions
+        actions?: action[]
+    }
+
+    interface action {
+        name: String,
+        action: (record:globalRecord)=>void
     }
 
     interface field {

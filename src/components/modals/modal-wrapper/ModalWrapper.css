@@ -31,5 +31,7 @@
     background-color: rgb(196, 196, 196);
     display: flex;
     justify-content: end;
+    flex-direction: row-reverse;
+    gap: 5px;
     border-radius: 0 0 15px 15px;
 }

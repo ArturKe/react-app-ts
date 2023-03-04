@@ -31,14 +31,10 @@ export default function ListComponent () {
             type: 'form',
             titleForm: 'Create record',
             description: '',
-            actionName: 'create',
-            actions: {
-                create: (record) => createRecordAction(record), 
-                delete: ()=>{}, 
-                default: ()=>{}, 
-                deleteAll: () =>{}, 
-                edit: ()=>{}
-            },
+            actions: [
+                {name: 'Create', action: (record) => createRecordAction(record)}
+                // createRecordAction(record)
+            ],
             fields: [
                 {name: 'title', label: 'Title', value: ''},
                 {name: 'description', label: 'Description', value: ''}
@@ -59,8 +55,9 @@ export default function ListComponent () {
             title,
             description,
             record,
-            actionName: 'edit',
-            actions: {edit: (record) => editRecordAction(record), delete: ()=>{},create: ()=>{}, default: ()=>{}, deleteAll: () =>{}},
+            actions: [
+                {name:'Apply edit', action: () => editRecordAction(record)}
+            ],
             fields: [
                 {name: 'title', label: 'Title', value: title},
                 {name: 'description', label: 'Description', value: description}
@@ -76,8 +73,9 @@ export default function ListComponent () {
                 type: 'warn',
                 title: 'Групповое удаление',
                 description: `Удалить ${amountSelectedRecords} записей?`,
-                actionName: 'deleteAll',
-                actions: {deleteAll: () => deleteAllAction(), delete: () =>{}, create: ()=>{}, edit: ()=>{}, default: ()=>{}}
+                actions: [
+                    {name:'DeleteAll', action: () => deleteAllAction()}
+                ]
             })
             toggleVisWarnModal()
         }
@@ -88,8 +86,9 @@ export default function ListComponent () {
             type: 'warn',
             title: 'Удаление записи',
             description: `Удалить запись: "${title}" ?`,
-            actionName: 'delete',
-            actions: {delete: () => deleteAction(id), create: ()=>{}, deleteAll: ()=>{}, edit: ()=>{}, default: ()=>{}}
+            actions: [
+                {name:'Delete', action: () => deleteAction(id)}
+            ]
             // actions: {delete: deleteAction(id)}
             
         })
@@ -122,10 +121,11 @@ export default function ListComponent () {
         setCheckBoxState(false)
     }
     const createRecordAction = (record: globalRecord) => {
+        console.log('Create')
         // console.log(record.title + record.description)
-        if (record.title.length > 0 || record.description.length > 0) {
+        if ((record.title || []).length > 0 || (record.description || []).length > 0) {
             let newItem = [...items] 
-            newItem.push({id: +new Date, title: record.title, description: record.description, selected: false, created: (new Date).toString()},)
+            newItem.push({id: +new Date, title: record.title || '', description: record.description || '', selected: false, created: (new Date).toString()},)
             setItems(newItem)
         }
     }
@@ -135,8 +135,8 @@ export default function ListComponent () {
 
         let editItem = newItems.find((item) => item.id === record.id)
         if ( editItem ) {
-            editItem.title = record.title
-            editItem.description = record.description
+            editItem.title = record.title || ''
+            editItem.description = record.description || ''
         }
 
         console.log(editItem)
@@ -164,14 +164,7 @@ export default function ListComponent () {
 
     const [ModalConfig, setModalConfig] = useState<modalConfig>({
         type: 'warn',
-        actionName: 'default',
-        actions: {
-            delete: deleteAction,
-            create: createRecordAction,
-            deleteAll: deleteAllAction,
-            edit: editRecordAction,
-            default: ()=>{}
-        }
+        actions: []
     })
 
     const modalWarn = () => {

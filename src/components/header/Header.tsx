@@ -5,6 +5,7 @@ import { Menu } from '../icons';
 import './header.css';
 // import Button from '../button/button';
 import Button from '@/components/button/Button';
+import WarnModal from '@/components/modals/warn/WarnModal.jsx';
 
 export default function Header () {
 
@@ -13,8 +14,62 @@ export default function Header () {
         mobileMenuVisibleSet(!mobileMenuVisible)
     }
 
+    // Проверка бэка, возврает массив пользователей
+    // const fetchData = async () => {
+    //     console.log('Fetch Data')
+    //     const url='http://localhost:3000/api/user'
+    //     const headers = [
+    //         ['Content-Type', 'text/html', 'extra'],
+    //         ['Accept'],
+    //       ]
+    //     fetch(url).then(res => {
+    //         console.log(res)
+    //         if (res.ok) return res.json()
+    //     }).then(data => console.log(data))
+    // } 
+
+    // Modals
+    const [warnModalVisible, setWarnModalVisible] = useState(false)
+    const [ModalConfig, setModalConfig] = useState<modalConfig>({
+        type: 'warn',
+        title: 'Title',
+        description: 'Description',
+        actions: [],
+        fields: []
+    })
+    const toggleForm = () => {
+        setWarnModalVisible(!warnModalVisible)
+    }
+    const toggleLoginForm = (title='', description='') => {
+        setModalConfig({
+            type: 'form',
+            title: 'Login',
+            description: `Email & Password`,
+            actions: [
+                {name: 'Login', action: ()=> {console.log('Action Login')}},
+                {name: 'Forgot password?', action: ()=> {console.log('Forgot password')}}
+            ],
+            fields: [
+                {name: 'title', label: 'Email', value: title},
+                {name: 'description', label: 'Password', value: description}
+            ]
+        })
+        toggleForm()
+    }
+
+    const modal = () => {
+        return warnModalVisible ?
+            <WarnModal 
+                config = {ModalConfig}
+                eventClose={toggleForm}
+                >
+            </WarnModal> : null
+    }
+
+
     return (
         <div className='header_component'>
+            {modal()}
             <div className='header_component-wrapper'>
                 <div className='header_component-logo'>
                     <img src={reactLogo} className="logo react" alt="React logo" />
@@ -28,7 +83,7 @@ export default function Header () {
                     </Link>
                 </div>
                 <div className='header_component_user-control'>
-                    <Button>Login</Button>
+                    <Button event={toggleLoginForm}>Login</Button>
                     <Button>Join us</Button>
                 </div>
                 <div className='mobile-menu'>

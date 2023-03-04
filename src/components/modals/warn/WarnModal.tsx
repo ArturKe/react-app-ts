@@ -18,12 +18,14 @@ export default function WarnModal (props: WarnModalProps) {
         props.eventClose()
     }
 
-    const acceptHandler = () => {
-        const record = {
+    const acceptHandler = (foo: (record: globalRecord)=>void) => {
+        const record: globalRecord = {
             ...text,
             id: props.config.record?.id
         }
-        if (props.config.actions) props.config.actions[props.config.actionName](record)
+        debugger
+        if (foo) foo(record)
+        // if (props.config.actions) props.config.actions[props.config.actionName](record)
         // console.log(props.config.title)
         props.eventClose()
     }
@@ -57,6 +59,17 @@ export default function WarnModal (props: WarnModalProps) {
         })
     }
 
+    // Actions to buttons
+    const buttons = () => {
+        return (
+            (props.config.actions || []).map(action => {
+                return (
+                    <Button event={() => acceptHandler(action.action)}>{action.name}</Button>
+                )
+           })
+        )
+    }
+
 
     if (props.config.type === 'warn') {
         return (
@@ -64,13 +77,13 @@ export default function WarnModal (props: WarnModalProps) {
                 eventClose={closeHandler}
                 header={props.config.title}
                 content={props.config.description}
-                footer={<Button event={acceptHandler}>Ok</Button>}
+                footer={buttons()}
             ></ModalWrapper>
         )  
     } else {
         return (<ModalWrapper
             eventClose={closeHandler}
-            header={props.config.titleForm }
+            header={props.config.title }
             content={
                 <div className='edit-form'>
                     <div className='edit-form_labels'>
@@ -90,7 +103,7 @@ export default function WarnModal (props: WarnModalProps) {
                     </div>
                 </div>
             }
-            footer={<Button event={acceptHandler}>Ok</Button>}
+            footer={buttons()}
         ></ModalWrapper>)
     }
     // if (props.config.type === 'form')
